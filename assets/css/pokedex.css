@@ -146,6 +146,18 @@
     border-radius: 1rem;
 }
 
+#clicavel{
+    cursor: pointer;
+    }
+    
+#clicavel:hover{
+    color: red;
+}
+    
+#clicavel:active{
+    color: blue;
+}
+
 @media screen and (min-width: 380px) {
     .pokemons {
         grid-template-columns: 1fr 1fr;
