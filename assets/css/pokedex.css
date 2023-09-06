@@ -127,6 +127,31 @@
     height: 70px;
 }
 
+.modal-body .pokemonInfo {
+    position: fixed;
+    left: 180px;
+    top: 100px;
+    padding: 20;
+    margin: 10;
+    list-style: none;
+}
+
+.modal-body  .pokemonInfo .type {
+    color: #fff;
+    padding: .8rem 3rem;
+    margin: .25rem 0;
+    font-size: .1;
+    border-radius: 1rem;
+    filter: brightness(1.1);
+    text-align: center;
+}
+
+
+.modal-body img {
+    max-width: 100%;
+    height: 150px;
+}
+
 .pagination {
     display: flex;
     flex-direction: row;

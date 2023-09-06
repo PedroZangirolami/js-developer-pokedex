@@ -8,7 +8,7 @@ let offset = 0;
 
 function convertPokemonToLi(pokemon) {
     return `
-        <div id="clicavel" onclick="executaAcao(${pokemon.number})">
+        <div id="clicavel" onclick="executaAcao('${pokemon.name}')">
             <li class="pokemon ${pokemon.type}">
                 <span class="number">#${pokemon.number}</span>
                 <span class="name">${pokemon.name}</span>
@@ -49,16 +49,23 @@ loadMoreButton.addEventListener('click', () => {
     }
 })
 
-function createModal() {
+function createModal(pokemon) {
     return `    
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal"><span>×</span></button>
-                    <h4 class="modal-title">Título da mensagem</h4>
+                    <h4 class="modal-title">${pokemon.name} #${pokemon.number} </h4>
                 </div>
                 <div class="modal-body">
-                    <p>Conteúdo da mensagem</p>
+                    
+                    <img src="${pokemon.photo}"
+                    alt="${pokemon.name}">
+
+                    <ol class="pokemonInfo">
+                         ${pokemon.types.map((type) => `<li class="type ${type}">${type}</li>`).join('')}
+                    </ol>     
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
@@ -67,11 +74,10 @@ function createModal() {
         </div>`
 }
 
-function executaAcao(pokemonId){
-    
-    pokeApi.getPokemons(offset, limit).then((pokemons = []) => {
-        //const newHtml = pokemons.map(convertPokemonToLi).join('')
-        modalMensagem.innerHTML = createModal()
+function executaAcao(pokemonName){
+
+    pokeApi.getPokemon(pokemonName).then((pokemon) => {
+        modalMensagem.innerHTML = createModal(pokemon)
     })
 
     $("#modal-mensagem").modal();
