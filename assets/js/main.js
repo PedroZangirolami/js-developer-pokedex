@@ -8,7 +8,7 @@ let offset = 0;
 
 function convertPokemonToLi(pokemon) {
     return `
-        <div id="clicavel" onclick="executaAcao('${pokemon.name}')">
+        <div id="clicavel" onclick="showPokemonDetrails('${pokemon.name}')">
             <li class="pokemon ${pokemon.type}">
                 <span class="number">#${pokemon.number}</span>
                 <span class="name">${pokemon.name}</span>
@@ -25,6 +25,41 @@ function convertPokemonToLi(pokemon) {
         </div>
     `
 }
+
+function createModal(pokemon) {
+    return `    
+        <div class="modal-dialog">
+            <div class="modal-content ${pokemon.type}">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span>×</span></button>
+                    <h4 class="modal-title">${pokemon.name} #${pokemon.number} </h4>
+                </div>
+                <div class="modal-body">
+                    
+                    <img src="${pokemon.photo}"
+                    alt="${pokemon.name}">
+
+                    <ol class="pokemonInfo">
+                         ${pokemon.types.map((type) => `<li class="type ${type}">${type}</li>`).join('')}
+                    </ol>     
+
+                    <div class = "status">
+                        <p>Base stats:</p>
+                        <p>height: ${pokemon.height}</p>
+                        <p>weight: ${pokemon.weight}</p>
+                        <p>HP: ${pokemon.HP}</p>
+                        <p>attack: ${pokemon.attack}</p>
+                        <p>defense: ${pokemon.defense}</p>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                </div>
+            </div>
+        </div>`
+}
+
 
 function loadPokemonItens(offset, limit) {
     pokeApi.getPokemons(offset, limit).then((pokemons = []) => {
@@ -49,32 +84,7 @@ loadMoreButton.addEventListener('click', () => {
     }
 })
 
-function createModal(pokemon) {
-    return `    
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal"><span>×</span></button>
-                    <h4 class="modal-title">${pokemon.name} #${pokemon.number} </h4>
-                </div>
-                <div class="modal-body">
-                    
-                    <img src="${pokemon.photo}"
-                    alt="${pokemon.name}">
-
-                    <ol class="pokemonInfo">
-                         ${pokemon.types.map((type) => `<li class="type ${type}">${type}</li>`).join('')}
-                    </ol>     
-
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                </div>
-            </div>
-        </div>`
-}
-
-function executaAcao(pokemonName){
+function showPokemonDetrails(pokemonName){
 
     pokeApi.getPokemon(pokemonName).then((pokemon) => {
         modalMensagem.innerHTML = createModal(pokemon)
